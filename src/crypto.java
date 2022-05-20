@@ -1,14 +1,58 @@
 import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Security;
+import java.util.Base64;
+
 import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 
-public class Base58 extends EncrypRSA{
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+public class crypto {
+	// AESEncrypt
+    public static final String ALGORITHM = "AES/ECB/PKCS7Padding";
+
+    static{
+        try{
+            Security.addProvider(new BouncyCastleProvider());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static String Aes256Encode(String str, byte[] key) {
+        byte[] result = null;
+        try {
+            Cipher cipher = Cipher.getInstance(ALGORITHM, "BC");
+            SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec);
+            result = cipher.doFinal(str.getBytes("UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new String(Base64.getEncoder().encode(result));
+    }
+ 
+    public static String Aes256Decode(String str, byte[] key) {
+        byte[] bytes = Base64.getDecoder().decode(str);
+        String result = null;
+        try {
+            Cipher cipher = Cipher.getInstance(ALGORITHM, "BC");
+            SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+            cipher.init(Cipher.DECRYPT_MODE, keySpec);
+            byte[] decoded = cipher.doFinal(bytes);
+            result = new String(decoded, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    //Base 58
     private static final char[] ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
             .toCharArray();
     private static final int BASE_58 = ALPHABET.length;
@@ -142,22 +186,66 @@ public class Base58 extends EncrypRSA{
         System.arraycopy(source, from, range, 0, range.length);
         return range;
     }
+    // integer to byte
+ 	public static byte[] inttobyte(int i) {
+ 		byte[] result = new byte[4];
+ 		result[0] = (byte)((i >> 24) & 0xFF);
+ 		result[1] = (byte)((i >> 16) & 0xFF);
+ 		result[2] = (byte)((i >> 8) & 0xFF);
+ 		result[3] = (byte)(i & 0xFF);
+ 		return result;
+ 	}
+ 	// byte to integer
+ 	public static int bytetoint(byte[] bytes) {
+ 		int value=0;
+ 		for(int i = 0; i < 4; i++) {
+ 			int shift= (3-i) * 8;
+ 			value +=(bytes[i] & 0xFF) << shift;
+ 		}
+ 		return value;
+ 	}
+    //RSA Encryption
+ 	//private key encryption
+ 	public static byte[] encrypt(PrivateKey privateKey,byte[] srcBytes) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+ 		if(privateKey!=null){
+ 			Cipher cipher = Cipher.getInstance("RSA");
+ 			cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+ 			byte[] resultBytes = cipher.doFinal(srcBytes);
+ 			return resultBytes;
+ 		}
+ 		return null;
+ 	}
+ 	//public key decryption
+ 	public static byte[] decrypt(PublicKey publicKey,byte[] srcBytes) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+ 		if(publicKey!=null){
+ 			Cipher cipher = Cipher.getInstance("RSA");
+ 			cipher.init(Cipher.DECRYPT_MODE, publicKey);
+ 			byte[] resultBytes = cipher.doFinal(srcBytes);
+ 			return resultBytes;
+ 		}
+ 		return null;
+ 	}
+
+ 	//public key encryption
+ 	public static byte[] encrypt1(PublicKey publicKey,byte[] srcBytes) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+ 		if(publicKey!=null){
+ 			Cipher cipher = Cipher.getInstance("RSA");
+ 			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+ 			byte[] resultBytes = cipher.doFinal(srcBytes);
+ 			return resultBytes;
+ 		}
+ 		return null;
+ 	}
+ 	//private key decryption
+ 	public static byte[] decrypt1(PrivateKey privateKey,byte[] srcBytes) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+ 		if(privateKey!=null){
+ 			Cipher cipher = Cipher.getInstance("RSA");
+ 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
+ 			byte[] resultBytes = cipher.doFinal(srcBytes);
+ 			return resultBytes;
+ 		}
+ 		return null;
+ 	}
 
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, Exception{
-        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-        keyPairGen.initialize(512);
-        KeyPair keyPair = keyPairGen.generateKeyPair();
-        PrivateKey privateKey = (PrivateKey)keyPair.getPrivate();
-        PublicKey publicKey = (PublicKey)keyPair.getPublic();
-
-        byte[] publicBT =publicKey.getEncoded();
-        System.out.println(new String(publicBT));
-        String str=encode(publicBT);
-        System.out.println(str);
-        System.out.println(str.length());
-        byte[] output=decode(str);
-        System.out.println(new String(output));
-    }
 }
-
