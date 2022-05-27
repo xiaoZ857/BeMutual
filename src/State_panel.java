@@ -62,7 +62,7 @@ public class State_panel extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel_2 = new JLabel("caller :");
+		JLabel lblNewLabel_2 = new JLabel("requester:");
 		
 		lblNewLabel_2.setBounds(34, 56, 68, 19);
 		contentPane.add(lblNewLabel_2);
@@ -74,13 +74,13 @@ public class State_panel extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel_5 = new JLabel("enter BCADD to find others");
-		lblNewLabel_5.setBounds(101, 47, 166, 15);
+		JLabel lblNewLabel_5 = new JLabel("enter responder's BCADD to request");
+		lblNewLabel_5.setBounds(101, 47, 250, 15);
 		panel_1.add(lblNewLabel_5);
 		
-		JLabel lblNewLabel_6 = new JLabel("BCADD : ");
+		JLabel lblNewLabel_6 = new JLabel("responder:");
 		
-		lblNewLabel_6.setBounds(21, 78, 81, 15);
+		lblNewLabel_6.setBounds(21, 75, 81, 15);
 		panel_1.add(lblNewLabel_6);
 		
 		
@@ -88,7 +88,7 @@ public class State_panel extends JFrame {
 		textPane_3.setBounds(101, 72, 166, 21);
 		panel_1.add(textPane_3);
 		
-		JLabel lblNewLabel = new JLabel("Sender");
+		JLabel lblNewLabel = new JLabel("");
 		
 		lblNewLabel.setBounds(167, 10, 62, 27);
 		panel_1.add(lblNewLabel);
@@ -97,12 +97,12 @@ public class State_panel extends JFrame {
 		textPane_3_3.setBounds(108, 54, 166, 21);
 		contentPane.add(textPane_3_3);
 		
-		JLabel lblNewLabel_1 = new JLabel("Receiver");
+		JLabel lblNewLabel_1 = new JLabel("");
 		
 		lblNewLabel_1.setBounds(162, 10, 82, 36);
 		contentPane.add(lblNewLabel_1);
 		
-		JButton btnNewButton_1 = new JButton("receive");
+		JButton btnNewButton_1 = new JButton("response");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Map<String, Object> res;
@@ -148,7 +148,7 @@ public class State_panel extends JFrame {
 		btnNewButton.setBounds(303, 70, 97, 23);
 		contentPane.add(btnNewButton);
 
-		JButton btnNewButton_3 = new JButton("find");
+		JButton btnNewButton_3 = new JButton("request");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BCADD = textPane_3.getText();
@@ -176,7 +176,7 @@ public class State_panel extends JFrame {
 				}
 			}
 		});
-		btnNewButton_3.setBounds(305, 76, 97, 23);
+		btnNewButton_3.setBounds(305, 72, 97, 23);
 		panel_1.add(btnNewButton_3);
 	}
 }

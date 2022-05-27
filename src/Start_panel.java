@@ -58,14 +58,14 @@ public class Start_panel extends JFrame {
 		
 		
 		
-		JLabel lblNewLabel = new JLabel("BE-RAN Demonstration");
+		JLabel lblNewLabel = new JLabel("BeMutual Demonstration");
 		
-		lblNewLabel.setBounds(118, 33, 210, 29);
+		lblNewLabel.setBounds(145, 33, 210, 29);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("use 'register' to upload your BCADD");
+		JLabel lblNewLabel_1 = new JLabel("use 'bind' to upload your {BCADD & IP} binding");
 		
-		lblNewLabel_1.setBounds(81, 153, 276, 66);
+		lblNewLabel_1.setBounds(85, 153, 276, 66);
 		contentPane.add(lblNewLabel_1);
 
 		JTextField textField = new JTextField();
@@ -73,7 +73,7 @@ public class Start_panel extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("register");
+		JButton btnNewButton = new JButton("bind");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				KeyPairGenerator keyPairGen = null;
