@@ -54,7 +54,7 @@ public class State_panel extends JFrame {
 	 * Create the frame.
 	 */
 	public State_panel() {
-		setTitle("State");
+		setTitle("Status");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 449, 306);
 		contentPane = new JPanel();
