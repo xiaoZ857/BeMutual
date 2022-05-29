@@ -33,7 +33,8 @@ public class talkpanel extends JFrame implements ActionListener {
         JPanel inputPanel=new JPanel();
         inputFiled=new JTextField(20);
         sendBt=new JButton("send");
-
+        chatContent.append("local: Hello! This is Alice! Can you hear me?\n");
+        chatContent.append("16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM: Hello! This is Bob! I can hear you.\n");
         sendBt.addActionListener(e -> {
             String content=inputFiled.getText();
             if(content !=null && !content.trim().equals("")){

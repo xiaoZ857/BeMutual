@@ -58,7 +58,7 @@ public class Start_panel extends JFrame {
 		
 		
 		
-		JLabel lblNewLabel = new JLabel("BeMutual Demonstration");
+		JLabel lblNewLabel = new JLabel("P2P Messages Services");
 		
 		lblNewLabel.setBounds(145, 33, 210, 29);
 		contentPane.add(lblNewLabel);
